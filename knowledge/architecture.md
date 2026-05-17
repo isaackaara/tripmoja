@@ -23,11 +23,19 @@
 
 ### Deployment
 - **Vercel** - free tier, auto-deploys from GitHub main
-- **Neon** or **Supabase** - managed Postgres (both have free tiers; Neon preferred for simplicity)
+- **Neon** - managed Postgres (chosen over Supabase for simplicity)
+- **Production URL:** https://tripmoja.vercel.app
+- **GitHub:** https://github.com/isaackaara/tripmoja (public, MIT)
+
+### Vercel + Prisma gotcha
+Vercel caches `node_modules` between builds. Prisma Client is generated into `node_modules/@prisma/client` and is NOT regenerated automatically on Vercel unless you explicitly run `prisma generate` in the build step.
+
+Fix: set `"build": "prisma generate && next build"` in `package.json`. Without this, the build succeeds locally but fails on Vercel with `PrismaClientInitializationError`.
 
 ### Open Source Infrastructure
-- Public GitHub repo
+- Public GitHub repo (isaackaara/tripmoja)
 - MIT License
+- Internal ops files (.claude/, session-log.md, COMPLETIONS.md, INBOX.md, meeting-prep/, CLAUDE.md) are gitignored - keep the public repo clean
 - `.env.example` kept in sync
 - No secrets committed, ever
 
