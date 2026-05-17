@@ -1,0 +1,314 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Design tokens — keep in sync with tailwind.config.ts */
+:root {
+  --tm-blue:          #7697F5;
+  --tm-blue-700:      #5A7DDC;
+  --tm-blue-100:      #E4ECFE;
+  --tm-blue-050:      #EFF3FF;
+  --tm-orange:        #EF9B5B;
+  --tm-orange-700:    #D17F3D;
+  --tm-green:         #9CF1C4;
+  --tm-green-700:     #4FBA88;
+  --tm-ink:           #1A1A2E;
+  --tm-ink-700:       #3B3B55;
+  --tm-ink-500:       #6B6B85;
+  --tm-ink-300:       #A6A6BA;
+  --tm-surface:       #F5F7FF;
+  --tm-white:         #FFFFFF;
+  --tm-error:         #E53935;
+  --tm-border:        #E5E7F0;
+  --tm-border-strong: #CDD2E1;
+
+  --sh-card:  0 2px 8px rgba(26,26,46,0.08);
+  --sh-pop:   0 8px 24px rgba(26,26,46,0.12);
+  --sh-press: 0 1px 2px rgba(26,26,46,0.06);
+
+  --r-card:  12px;
+  --r-btn:   20px;
+  --r-sheet: 24px;
+  --r-pill:  999px;
+
+  --ease-out:    cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.5, 1);
+  --dur-fast:    120ms;
+  --dur:         180ms;
+  --dur-slow:    280ms;
+}
+
+/* Dark mode overrides */
+[data-theme=dark] {
+  --tm-surface:       #0F0F1A;
+  --tm-white:         #1A1A2E;
+  --tm-ink:           #F0F0F8;
+  --tm-ink-700:       #C8C8D8;
+  --tm-ink-500:       #8888A0;
+  --tm-ink-300:       #55556A;
+  --tm-border:        #2A2A40;
+  --tm-border-strong: #3A3A55;
+  --sh-card:  0 2px 8px rgba(0,0,0,0.3);
+  --sh-pop:   0 8px 24px rgba(0,0,0,0.4);
+}
+
+/* Base reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  color: var(--tm-ink);
+  background: var(--tm-surface);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography scale */
+.tm-display {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.tm-h1 {
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  line-height: 1.25;
+}
+
+.tm-h2 {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.tm-h3 {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.tm-body {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.tm-small {
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.tm-label {
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Card */
+.card {
+  background: var(--tm-white);
+  border-radius: var(--r-card);
+  padding: 16px;
+  box-shadow: var(--sh-card);
+}
+
+/* Section heading */
+.section-h {
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--tm-ink-500);
+}
+
+/* Decorative blob */
+.blob {
+  position: absolute;
+  border-radius: 999px;
+  pointer-events: none;
+}
+.blob.blue   { background: var(--tm-blue); }
+.blob.orange { background: var(--tm-orange); }
+.blob.green  { background: var(--tm-green); }
+.blob.ink    { background: var(--tm-ink); }
+
+/* Hero band */
+.hero-band {
+  padding: 24px 16px;
+  background: var(--tm-white);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Input */
+.input-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 14px;
+  border-radius: var(--r-card);
+  border: 1px solid var(--tm-border);
+  background: var(--tm-white);
+  font-size: 15px;
+  color: var(--tm-ink);
+  transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+}
+.input-field:focus-within {
+  border-color: var(--tm-border-strong);
+  box-shadow: 0 0 0 3px rgba(118,151,245,0.2);
+}
+.input-field.error {
+  border-color: var(--tm-error);
+}
+
+/* Textarea */
+.input-field textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 12px 14px;
+  border-radius: var(--r-card);
+  border: 1px solid var(--tm-border);
+  font-family: inherit;
+  font-size: 15px;
+  color: var(--tm-ink);
+  resize: vertical;
+  outline: none;
+}
+
+/* Sticky CTA bar */
+.sticky-cta {
+  position: sticky;
+  bottom: 0;
+  padding: 12px 16px;
+  padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid var(--tm-border);
+  z-index: 20;
+}
+
+/* Member row separator */
+.member-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--tm-border);
+}
+.member-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  border-bottom: 2px solid var(--tm-border);
+  gap: 0;
+}
+.tabs .tab {
+  flex: 1;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--tm-ink-500);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.tabs .tab.active {
+  color: var(--tm-blue);
+  border-bottom-color: var(--tm-blue);
+}
+
+/* App bar */
+.appbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  height: 56px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--tm-white);
+  border-bottom: 1px solid var(--tm-border);
+}
+.appbar.transparent {
+  background: transparent;
+  border-bottom: none;
+}
+
+/* Icon button */
+.iconbtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out);
+}
+.iconbtn:hover {
+  background: var(--tm-surface);
+}
+
+/* Bottom nav */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: var(--tm-white);
+  border-top: 1px solid var(--tm-border);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  z-index: 40;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.bottom-nav .tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--tm-ink-300);
+  cursor: pointer;
+  padding: 4px 0;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.bottom-nav .tab.active { color: var(--tm-blue); }
+
+/* Route display */
+.route-display {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--tm-ink);
+}
+.route-display .arrow {
+  color: var(--tm-ink-300);
+  font-size: 14px;
+}
